@@ -51,7 +51,7 @@ export default {
     "a-button": Button
   },
   methods: {
-    onFormSubmit() {
+    async onFormSubmit() {
       this.$emit("submit", this.form);
     }
   },

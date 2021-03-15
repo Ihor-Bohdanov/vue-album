@@ -1,6 +1,6 @@
 <template>
   <div class="album-photo">
-    <img class="album-photo__image" :src="src" :alt="alt" />
+    <img class="album-photo__image" loading="lazy" :src="src" :alt="alt" />
   </div>
 </template>
 

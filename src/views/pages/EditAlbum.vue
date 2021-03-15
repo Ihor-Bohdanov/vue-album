@@ -31,8 +31,12 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$store.dispatch("fetchAlbumData", { id: this.id });
+  async mounted() {
+    try {
+      await this.$store.dispatch("fetchAlbumData", { id: this.id });
+    } catch (error) {
+      message.error("Can not fetch album data");
+    }
   },
   beforeDestroy() {
     this.$store.dispatch("clearAlbumData");

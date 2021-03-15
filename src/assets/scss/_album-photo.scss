@@ -1,8 +1,13 @@
 .album-photo {
     width: 100%;
+    padding-top: 100%;
+    position: relative;
 
     &__image {
         width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
         object-fit: contain;
     }
 }

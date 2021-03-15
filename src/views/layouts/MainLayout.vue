@@ -11,7 +11,9 @@
         <router-view />
       </a-layout-content>
     </a-layout>
-    <a-layout-footer>Footer</a-layout-footer>
+    <a-layout-footer>
+      <Copyright />
+    </a-layout-footer>
   </a-layout>
 </template>
 
@@ -19,6 +21,7 @@
 import { Layout } from "ant-design-vue";
 import Menu from "@/components/global/Menu";
 import Logo from "@/components/global/Logo";
+import Copyright from "@/components/global/Copyright";
 
 export default {
   name: "MainLayout",
@@ -29,7 +32,8 @@ export default {
     "a-layout-content": Layout.Content,
     "a-layout-footer": Layout.Footer,
     Menu,
-    Logo
+    Logo,
+    Copyright
   },
   props: {
     path: {

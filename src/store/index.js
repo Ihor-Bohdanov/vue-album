@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 //API
 const ALBUMS = "/albums";
@@ -24,7 +25,9 @@ export default new Vuex.Store({
       state.albums.unshift(album);
     },
     updateAlbum(state, updatedAlbum) {
-      const index = state.albums.findIndex(album => album.id === updatedAlbum.id);
+      const index = state.albums.findIndex(
+        album => album.id === updatedAlbum.id
+      );
       state.albums.splice(index, 0, updatedAlbum);
     },
     setAlbumData(state, albumData) {
@@ -37,55 +40,42 @@ export default new Vuex.Store({
   actions: {
     async fetchAlbums({ commit }) {
       try {
-        const response = await fetch(`${process.env.VUE_APP_API_URL}${ALBUMS}`);
-        const result = await response.json();
-        commit("setAlbums", result);
+        const response = await axios.get(
+          `${process.env.VUE_APP_API_URL}${ALBUMS}`
+        );
+        commit("setAlbums", response.data);
       } catch (error) {
         console.error(error);
         throw error;
       }
     },
-    
     async fetchAlbumData({ commit }, payload) {
-      return new Promise((resolve, reject) => {
-        fetch(
+      try {
+        const response = await axios.get(
           `${process.env.VUE_APP_API_URL}${ALBUMS}/${payload.id}`
-        )
-        .then(response => {
-          if (!response.ok) throw Error(response.status)
-          console.log('response', response);
-          return response.json()
-          // return response.json()
-        })
-        .then(result => {
-          console.log('result', result)
-          commit("setAlbumData", result)
-          resolve()
-        })
-        .catch((error) => {
-          console.error(error)
-          reject()
-          throw error
-        });
-      });
+        );
+        commit("setAlbumData", response.data);
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
     },
     async fetchAlbumPhotos({ commit }, payload) {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `${process.env.VUE_APP_API_URL}${ALBUMS}/${payload.id}${PHOTOS}`
         );
-        const result = await response.json();
-        commit("setAlbum", result);
+        commit("setAlbum", response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         throw error;
       }
     },
     async deleteAlbum({ commit }, payload) {
       try {
-        await fetch(`${process.env.VUE_APP_API_URL}${ALBUMS}/${payload.id}`, {
-          method: "DELETE"
-        });
+        await axios.delete(
+          `${process.env.VUE_APP_API_URL}${ALBUMS}/${payload.id}`
+        );
         commit("removeAlbum", payload);
       } catch (error) {
         console.error(error);
@@ -94,18 +84,14 @@ export default new Vuex.Store({
     },
     async createAlbum({ commit }, payload) {
       try {
-        const response = await fetch(
+        const response = await axios.post(
           `${process.env.VUE_APP_API_URL}${ALBUMS}`,
           {
-            method: "POST",
-            body: JSON.stringify({
-              title: payload.title,
-              userId: payload.userId
-            })
+            title: payload.title,
+            userId: payload.userId
           }
         );
-        const result = await response.json();
-        commit("addAlbum", { ...payload, id: result.id });
+        commit("addAlbum", { ...response.data });
       } catch (error) {
         console.error(error);
         throw error;
@@ -113,18 +99,14 @@ export default new Vuex.Store({
     },
     async editAlbum({ commit }, payload) {
       try {
-        const response = await fetch(
+        const response = await axios.put(
           `${process.env.VUE_APP_API_URL}${ALBUMS}/${payload.id}`,
           {
-            method: "PUT",
-            body: JSON.stringify({
-              title: payload.title,
-              userId: payload.userId
-            })
+            title: payload.title,
+            userId: payload.userId
           }
         );
-        const result = await response.json();
-        commit("updateAlbum", { ...payload, id: result.id });
+        commit("updateAlbum", { ...response.data });
       } catch (error) {
         console.error(error);
         throw error;
