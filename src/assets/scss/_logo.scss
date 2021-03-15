@@ -1,0 +1,10 @@
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    &__text {
+        color: $white;
+        font-size: (30rem/16);
+        line-height: (38rem/16);
+    }
+}
