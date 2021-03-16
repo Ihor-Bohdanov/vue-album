@@ -8,7 +8,9 @@
         <router-link to="/albums">Albums</router-link>
       </a-menu-item>
       <a-menu-item key="/create-album">
-        <router-link to="/create-album">New album <a-icon type="plus-square" /></router-link>
+        <router-link to="/create-album">
+          New album <a-icon type="plus-square" />
+        </router-link>
       </a-menu-item>
     </a-menu>
   </div>
@@ -28,7 +30,7 @@ export default {
   },
   props: {
     path: {
-      required: true, 
+      required: true,
       type: String
     }
   },
