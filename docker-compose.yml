@@ -1,15 +1,9 @@
 version: "3.8"
 
 services:
-    vue:
-        image: node:lts-alpine
-        command: sh -c "npm install && npm run dev"
+    vue_app:
+        build: .
         ports: 
             - 8080:8080
-
-        working_dir: /vue-app
         volumes:
-            - ./:/app
-
-
-sudo docker run -dp 8080:8080
+            - /home/ihor/Projects/TestTask/vue-album/src:/vue-app/src
